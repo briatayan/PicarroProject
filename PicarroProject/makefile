@@ -15,12 +15,13 @@ clean-pyc:
 		find . -name '*.pyo'
 
 develop:
-	. Scripts/activate
-	pip install -r requirements.txt
-	${PYTHON} InitDB.py
-	export FLASK_APP=WebApp.py
-	${PYTHON} -m flask run
-	pause
+	( \
+		. Scripts/activate && \
+		pip install -r requirements.txt && \
+		${PYTHON} InitDB.py && \
+		export FLASK_APP=WebApp.py && \
+		${PYTHON} -m flask run \
+	)
 
 clean-build: clean-pyc
 	rm todo.db
