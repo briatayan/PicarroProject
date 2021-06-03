@@ -7,7 +7,7 @@ PYTHON = python3
 help:
 	@echo "--------------------------------------------------"
 	@echo "For instructions on how to set up the project,"
-	@echo "please read the documentation at 'instructions.md'"
+	@echo "please read the documentation at 'README.md'"
 	@echo "--------------------------------------------------"
 
 clean-pyc:
