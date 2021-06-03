@@ -1,0 +1,279 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Todo List Service",
+    "version": "1.0.0",
+    "title": "Todo-List-Service",
+    "contact": {
+      "email": "brianna.atayan@gmail.com"
+    }
+  },
+    "tags": [
+      {
+          "name": "Todo List Request",
+          "description": "Web API for modifying a todo list."
+      }
+    ],
+    "paths": {
+      "/hello": {
+        "get": {
+          "tags": [
+            "Todo List Request"
+          ],
+          "summary" : "Checks if API is running and can accept requests.",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/hello"
+              }
+            }
+          }
+        }
+      },
+    "/get-all-tasks": {
+      "get": {
+        "tags": [
+          "Todo List Request"
+        ],
+        "summary" : "Retrieves all tasks in list.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/todo"
+            }
+          }
+        }
+      }
+    },
+    "/get-task/{id}": {
+      "get": {
+        "tags": [
+          "Todo List Request"
+        ],
+        "summary": "Get task with given ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the task we want to get.",
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/todo"
+            }
+          },
+          "404": {
+            "description": "FAILED. ID not found."
+          }
+        }
+      }
+    },
+    "/add-task": {
+      "post": {
+        "tags": [
+          "Todo List Request"
+        ],
+        "summary": "Add new task to list.",
+        "requestBody": {
+            "description": "Task content",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/add_todo"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "CREATED",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            "400": {
+              "description:": "FAILED. Bad task content."
+            }
+          }
+      }
+    },
+    "/change-task-description/{id}" : {
+      "put": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of task we want to change.",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Todo List Request"
+        ],
+        "summary": "Change existing task.",
+        "requestBody": {
+          "description": "Task content",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/change_todo"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "UPDATED"
+          },
+          "404": {
+            "description": "FAILED. ID not found."
+          },
+          "400": {
+            "description": "FAILED. Bad request."
+          }
+        }
+      }
+    },
+    "/complete-task/{id}": {
+      "put": {
+        "summary": "Set task to complete.",
+        "tags": [
+          "Todo List Request"
+        ],
+        "parameters":[
+         {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of task we want to mark as complete.",
+          "type": "string"
+        }
+      ],
+        "responses": {
+          "201": {
+            "description": "UPDATED"
+          },
+          "404": {
+            "description": "FAILED. ID not found."
+          }
+        }
+      }
+    },
+  "/incomplete-task/{id}": {
+    "put": {
+      "summary": "Set task to incomplete.",
+      "tags": [
+        "Todo List Request"
+      ],
+      "parameters":[
+       {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ID of task we want to mark as incomplete.",
+        "type": "string"
+      }
+    ],
+      "responses": {
+        "201": {
+          "description": "UPDATED"
+        },
+        "404": {
+          "description": "FAILED. ID not found."
+        }
+      }
+    }
+  },
+  "/delete-task/{id}": {
+    "delete": {
+      "summary": "Delete task.",
+      "tags": [
+        "Todo List Request"
+      ],
+      "parameters":[
+       {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ID of task we want to delete.",
+        "type": "string"
+      }
+    ],
+      "responses": {
+        "201": {
+          "description": "DELETED"
+        },
+        "404": {
+          "description": "FAILED. ID not found."
+        }
+      }
+    }
+  }
+},
+    "components": {
+      "schemas": {
+        "hello": {
+          "properties": {
+            "hello": {
+              "type": "string"
+            }
+          }
+        },
+        "todo": {
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "date_added": {
+              "type": "dateTime"
+            },
+            "task": {
+              "type": "string"
+            },
+            "completed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "change_todo": {
+          "properties": {
+            "task": {
+              "type": "string"
+            }
+          }
+        },
+        "id": {
+          "properties": {
+            "id": {
+              "type": "integer"
+            }
+          }
+        },
+        "add_todo": {
+          "properties": {
+            "task": {
+              "type": "string"
+            }
+
+          }
+        }
+      }
+  }
+
+}
